@@ -45,6 +45,11 @@ function operate(args) {
   }
 }
 
+function populateDisplay(displayArgs) {
+  const display = document.querySelector("#display");
+  display.textContent = displayArgs;
+}
+
 let operations = {
   add: "+",
   sub: "-",
@@ -57,3 +62,24 @@ let calculatorArgs = {
   operator: undefined,
   numberTwo: undefined,
 };
+
+let displayArgs = "";
+
+// events
+
+const numberBlock = document.querySelector("#numberblock");
+const children = numberBlock.children;
+
+for (let i = 0; i < children.length; i++) {
+  if (
+    children[i].classList.contains("number-button") ||
+    children[i].classList.contains("operation-button")
+  ) {
+    console.log(children[i]);
+    children[i].addEventListener("click", () => {
+      displayArgs += String(children[i].id);
+      populateDisplay(displayArgs);
+    });
+  } else if (children[i].classList.contains("equal-button")) {
+  }
+}
