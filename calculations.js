@@ -64,6 +64,11 @@ function parseDisplayArgs(displayArgs) {
   populateDisplay(displayArgs);
 }
 
+function clearDisplay() {
+  displayArgs = "";
+  populateDisplay(displayArgs);
+}
+
 let operations = {
   add: "+",
   sub: "-",
@@ -96,6 +101,10 @@ for (let i = 0; i < children.length; i++) {
   } else if (children[i].id == "equal-button") {
     children[i].addEventListener("click", () => {
       parseDisplayArgs(displayArgs);
+    });
+  } else if (children[i].id == "clear-button") {
+    children[i].addEventListener("click", () => {
+      clearDisplay();
     });
   }
 }
