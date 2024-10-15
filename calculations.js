@@ -46,8 +46,8 @@ function operate(args) {
 }
 
 function populateDisplay(displayArgs) {
-  const display = document.querySelector("#display");
-  display.textContent = displayArgs;
+  let display = document.querySelector("#display");
+  display.value = displayArgs;
 }
 
 function parseDisplayArgs() {
@@ -62,6 +62,13 @@ function parseDisplayArgs() {
   calculatorArgs.numberOne = Number(calc[0]);
   calculatorArgs.operator = calc[1];
   calculatorArgs.numberTwo = Number(calc[2]);
+  console.log(calculatorArgs);
+  if (
+    isNaN(calculatorArgs.numberTwo) ||
+    checkIfIncludesOperations(calculatorArgs.operator)
+  ) {
+    return null;
+  }
 
   let result = operate(calculatorArgs).toFixed(3);
   args.splice(0, 3);
@@ -110,6 +117,15 @@ function checkIfPointAllowed() {
   }
 }
 
+function addSpaceAfterNumber(str) {
+  let operators = Object.values(operations)
+    .map((op) => "\\" + op)
+    .join("");
+  let regex = new RegExp(`(\\d)([${operators}])`, "g");
+
+  return str.replace(regex, "$1 $2");
+}
+
 let operations = {
   add: "+",
   sub: "-",
@@ -127,6 +143,18 @@ let displayArgs = "";
 
 // events
 
+const display = document.querySelector("#display");
+display.addEventListener("input", function () {
+  displayArgs = addSpaceAfterNumber(this.value);
+  populateDisplay(displayArgs);
+});
+
+display.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    parseDisplayArgs(displayArgs);
+  }
+});
+
 const numberBlock = document.querySelector("#numberblock");
 const children = numberBlock.children;
 
@@ -140,6 +168,7 @@ for (let i = 0; i < children.length; i++) {
       if (children[i].id == "." && !checkIfPointAllowed()) {
       } else {
         //displayArgs += String(children[i].id);
+        // add spaces around operators
         displayArgs += checkIfIncludesOperations(children[i].id)
           ? " " + String(children[i].id) + " "
           : String(children[i].id);

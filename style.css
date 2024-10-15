@@ -1,13 +1,18 @@
-body {
+body,
+html {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #a2d2df;
 }
 
 #calculator {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 300px;
+  aspect-ratio: 1/1;
   gap: 5px;
 }
 
@@ -17,7 +22,53 @@ body {
 }
 
 .calculator-button {
-  width: 18%;
+  width: 20%;
   aspect-ratio: 1 / 1;
   margin: 5px;
+}
+
+#display-holder,
+#display {
+  background-color: #f6efbd;
+}
+
+#display-holder {
+  height: 20%;
+  width: 100%;
+  border: 2px solid grey;
+}
+
+#display-holder > h3 {
+  margin: 5px;
+}
+
+#clear-button {
+  width: 100%;
+  aspect-ratio: 4/1;
+}
+
+.operation-button,
+.point-button,
+.equal-button {
+  background-color: #bc7c7c;
+  font-size: 20px;
+}
+
+.number-button {
+  background-color: #e4c087;
+  font-size: 20px;
+}
+
+#clear-button {
+  background-color: #bc7c7c;
+  font-size: 20px;
+}
+
+#display {
+  border: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
 }
