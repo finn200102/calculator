@@ -50,6 +50,20 @@ function populateDisplay(displayArgs) {
   display.textContent = displayArgs;
 }
 
+function parseDisplayArgs(displayArgs) {
+  // the backslash escapes the minus sign
+  let args = displayArgs.split(/([+\-*/])/);
+  let calc = args.slice(0, 3);
+  calculatorArgs.numberOne = Number(calc[0]);
+  calculatorArgs.operator = calc[1];
+  calculatorArgs.numberTwo = Number(calc[2]);
+
+  let result = operate(calculatorArgs);
+
+  displayArgs = String(result);
+  populateDisplay(displayArgs);
+}
+
 let operations = {
   add: "+",
   sub: "-",
@@ -75,11 +89,13 @@ for (let i = 0; i < children.length; i++) {
     children[i].classList.contains("number-button") ||
     children[i].classList.contains("operation-button")
   ) {
-    console.log(children[i]);
     children[i].addEventListener("click", () => {
       displayArgs += String(children[i].id);
       populateDisplay(displayArgs);
     });
-  } else if (children[i].classList.contains("equal-button")) {
+  } else if (children[i].id == "equal-button") {
+    children[i].addEventListener("click", () => {
+      parseDisplayArgs(displayArgs);
+    });
   }
 }
