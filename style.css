@@ -1,0 +1,23 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#calculator {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  gap: 5px;
+}
+
+#number-block {
+  display: flex;
+  flex-wrap: flex;
+}
+
+.calculator-button {
+  width: 18%;
+  aspect-ratio: 1 / 1;
+  margin: 5px;
+}
