@@ -62,7 +62,7 @@ function parseDisplayArgs() {
   calculatorArgs.operator = calc[1];
   calculatorArgs.numberTwo = Number(calc[2]);
 
-  let result = operate(calculatorArgs);
+  let result = operate(calculatorArgs).toFixed(3);
   args.splice(0, 3);
 
   args.unshift(String(result));
