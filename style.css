@@ -1,9 +1,22 @@
 body,
 html {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #a2d2df;
+  gap: 10px;
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+}
+
+header {
+  background-color: #81a0a9;
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
 }
 
 #calculator {

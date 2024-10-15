@@ -65,7 +65,12 @@ function parseDisplayArgs() {
   console.log(calculatorArgs);
   if (
     isNaN(calculatorArgs.numberTwo) ||
-    checkIfIncludesOperations(calculatorArgs.operator)
+    !(
+      calculatorArgs.operator == "-" ||
+      calculatorArgs.operator == "+" ||
+      calculatorArgs.operator == "*" ||
+      calculatorArgs.operator == "/"
+    )
   ) {
     return null;
   }
