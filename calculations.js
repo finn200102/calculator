@@ -55,7 +55,8 @@ function parseDisplayArgs() {
     return null;
   }
   // the backslash escapes the minus sign
-  let args = displayArgs.split(/([+\-*/])/);
+  //let args = displayArgs.split(/([+\-*/])/);
+  let args = displayArgs.split(" ");
 
   let calc = args.slice(0, 3);
   calculatorArgs.numberOne = Number(calc[0]);
@@ -76,6 +77,37 @@ function parseDisplayArgs() {
 function clearDisplay() {
   displayArgs = "";
   populateDisplay(displayArgs);
+}
+
+function checkIfIncludesOperations(word) {
+  return (
+    word.includes(operations.add) ||
+    word.includes(operations.sub) ||
+    word.includes(operations.mul) ||
+    word.includes(operations.div)
+  );
+}
+
+function checkIfPointAllowed() {
+  if (checkIfIncludesOperations(displayArgs)) {
+    //const args = displayArgs.split(/([+\-*/])/);
+    const args = displayArgs.split(" ");
+    if (checkIfIncludesOperations(args.at(-1))) {
+      return false;
+    } else {
+      if (args.at(-1).includes(".")) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  } else {
+    if (displayArgs.includes(".")) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }
 
 let operations = {
@@ -101,19 +133,27 @@ const children = numberBlock.children;
 for (let i = 0; i < children.length; i++) {
   if (
     children[i].classList.contains("number-button") ||
-    children[i].classList.contains("operation-button")
+    children[i].classList.contains("operation-button") ||
+    children[i].id == "."
   ) {
     children[i].addEventListener("click", () => {
-      displayArgs += String(children[i].id);
-      populateDisplay(displayArgs);
+      if (children[i].id == "." && !checkIfPointAllowed()) {
+      } else {
+        //displayArgs += String(children[i].id);
+        displayArgs += checkIfIncludesOperations(children[i].id)
+          ? " " + String(children[i].id) + " "
+          : String(children[i].id);
+        populateDisplay(displayArgs);
+      }
     });
   } else if (children[i].id == "equal-button") {
     children[i].addEventListener("click", () => {
       parseDisplayArgs(displayArgs);
     });
-  } else if (children[i].id == "clear-button") {
-    children[i].addEventListener("click", () => {
-      clearDisplay();
-    });
   }
 }
+
+const clearButton = document.querySelector("#clear-button");
+clearButton.addEventListener("click", () => {
+  clearDisplay();
+});
