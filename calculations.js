@@ -50,17 +50,26 @@ function populateDisplay(displayArgs) {
   display.textContent = displayArgs;
 }
 
-function parseDisplayArgs(displayArgs) {
+function parseDisplayArgs() {
+  if (displayArgs === "" || displayArgs.split(/([+\-*/])/).length < 2) {
+    return null;
+  }
   // the backslash escapes the minus sign
   let args = displayArgs.split(/([+\-*/])/);
+
   let calc = args.slice(0, 3);
   calculatorArgs.numberOne = Number(calc[0]);
   calculatorArgs.operator = calc[1];
   calculatorArgs.numberTwo = Number(calc[2]);
 
   let result = operate(calculatorArgs);
+  args.splice(0, 3);
 
-  displayArgs = String(result);
+  args.unshift(String(result));
+
+  displayArgs = args.join(" ");
+
+  // displayArgs = String(result);
   populateDisplay(displayArgs);
 }
 
